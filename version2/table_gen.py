@@ -24,8 +24,8 @@ number_of_warehouses = 5
 trucks_per_warehouse = 4
 max_truck_units = 2
 warehouse_capacity = 10
-warehouse_units = 5
-grid_H = 3
+warehouse_units = 7
+grid_H = 4
 grid_V = 3
 
 status_descriptions = {
@@ -34,7 +34,7 @@ status_descriptions = {
     3: 'flat-tire',
     4: 'crash',
     5: 'over-capacity',
-    6: 'under-capacity',
+    6: 'out-of-stock',
     7: 'no-truck-available'
 }
 
@@ -100,11 +100,13 @@ def create_tables_and_populate():
         CREATE TABLE problems (
             id INT AUTO_INCREMENT PRIMARY KEY,
             truck_id INT,
+            time_occured INT,
             shipment_id INT,
             warehouse_from_id INT,
             warehouse_to_id INT,
             type INT,
             time_to_fix INT,
+            fixed BOOLEAN,
             FOREIGN KEY (type) REFERENCES status_types(id)
         )""")
 

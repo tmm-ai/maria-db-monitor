@@ -1,0 +1,50 @@
+# MaxScale Configuration File Example
+
+# Global parameters
+[maxscale]
+threads=auto
+
+# Server definition
+[mariadb-server]
+type=server
+address= my-mariadb-10.5.21   # Replace with your actual MariaDB container name or IP
+port=3306
+protocol=MySQLBackend
+
+# Monitor for MariaDB servers
+[MariaDB-Monitor]
+type=monitor
+module=mariadbmon
+servers=mariadb-server
+user=maxscale_monitor1              # Replace with your MaxScale monitor user
+passwd=logistics1231                # Replace with your MaxScale monitor user's password
+monitor_interval=10000
+
+# CDC Service for streaming binlog events
+[CDC Service]
+type=service
+router=cdc
+version_string=10.5.21           # Adjust this to match your MariaDB version if necessary
+servers=mariadb-server
+user=maxscale_user1              # User for CDC, ideally a different one with replication privileges
+passwd=logistics1231             # Password for the CDC user
+
+# Listener for CDC Service
+[CDC Listener]
+type=listener
+service=CDC Service
+protocol=CDC
+port=4001                        # Port for CDC connections, make sure this matches your Docker port mapping
+address=0.0.0.0                  # Listen on all network interfaces
+
+# MAXGUI Interface
+[MAXGUI]
+type=service
+router=cli
+
+[MAXGUI Listener]
+type=listener
+service=MAXGUI
+protocol=HTTP
+port=8989                        # Default MAXGUI port, match with your Docker port mapping
+address=0.0.0.0                  # Listen on all network interfaces for MAXGUI connections

@@ -41,14 +41,14 @@ def fetch_and_print_data(conn):
     # Fetch and print problems data
     print("\nProblems Data:")
     cursor.execute("""
-    SELECT problems.id, problems.truck_id, problems.shipment_id, problems.warehouse_from_id, problems.warehouse_to_id, status_types.description AS problem_type, problems.time_to_fix
+    SELECT problems.id, problems.truck_id, problems.time_occured, problems.shipment_id, problems.warehouse_from_id, problems.warehouse_to_id, status_types.description AS problem_type, problems.time_to_fix, problems.fixed
     FROM problems
     JOIN status_types ON problems.type = status_types.id
     """)
     problems = cursor.fetchall()
     if problems:
-        for (id, truck_id, shipment_id, warehouse_from_id, warehouse_to_id, problem_type, time_to_fix) in problems:
-            print(f"Problem ID: {id}, Truck ID: {truck_id}, Shipment ID: {shipment_id}, From: {warehouse_from_id}, To: {warehouse_to_id}, Problem Type: {problem_type}, Time to Fix: {time_to_fix}")
+        for (id, truck_id, time_occured, shipment_id, warehouse_from_id, warehouse_to_id, problem_type, time_to_fix, fixed) in problems:
+            print(f"Prob ID: {id}, Tr ID: {truck_id},Time Occur:{time_occured} Ship ID: {shipment_id}, From: {warehouse_from_id}, To: {warehouse_to_id}, Prob Type: {problem_type}, Time to Fix: {time_to_fix}, Fixed: {fixed}")
     else:
         print("No data available.")
 
