@@ -7,7 +7,7 @@ threads=auto
 # Server definition
 [mariadb-server]
 type=server
-address= my-mariadb-10.5.21   # Replace with your actual MariaDB container name or IP
+address= my-mariadb-10.5.21   
 port=3306
 protocol=MySQLBackend
 
@@ -24,7 +24,7 @@ monitor_interval=10000
 [CDC Service]
 type=service
 router=cdc
-version_string=10.5.21           # Adjust this to match your MariaDB version if necessary
+# version_string=10.5.21           # Adjust this to match your MariaDB version if necessary
 servers=mariadb-server
 user=maxscale_user1              # User for CDC, ideally a different one with replication privileges
 passwd=logistics1231             # Password for the CDC user
